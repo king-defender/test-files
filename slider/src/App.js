@@ -3,6 +3,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Slide from "./Component/Slide";
 import  { responsive } from "./Component/Data";
+import Stylesheet from "./Component/Style.css"
 import {useEffect, useState} from "react";
 
 function App() {
