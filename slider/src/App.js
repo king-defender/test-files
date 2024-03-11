@@ -2,22 +2,32 @@ import './App.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import Slide from "./Component/Slide";
-import { slideData, responsive } from "./Component/Data";
-import Stylesheet from "./Component/Style.css"
+import  { responsive } from "./Component/Data";
+import {useEffect, useState} from "react";
 
 function App() {
-    const slide = slideData.map((item) => (
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch('https://fakestoreapi.com/products?limit=20')
+            .then(res => res.json())
+            .then(json => setData(json))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+    const slide = data.map((item) => (
         <Slide
-            name={item.name}
-            url={item.imageurl}
-            price={item.price}
+            name={item.title}
+            url={item.image}
+            price={"$" + item.price}
             description={item.description}
+            category = {item.category}
         />
     ));
   return (
     <div className="App">
       <Carousel
-          showDots={true}
+          showDots={false}
           infinite={true}
           autoPlay={true}
           autoPlaySpeed={2000}
@@ -25,6 +35,7 @@ function App() {
       >
           {slide}
       </Carousel>
+
     </div>
   );
 }
